@@ -29,18 +29,34 @@ public class Input {
     }
 
     public int getInt(int min, int max) {
-        System.out.println("Please enter a number between " + min + " and " + max);
-        int userInput = scanner.nextInt();
-        if(userInput < min || userInput > max) {
+        int userInput;
+        try {
+            System.out.println("Please enter a number between " + min + " and " + max);
+            userInput = Integer.valueOf(this.scanner.nextLine());
+            if (userInput < min || userInput > max) {
+                return getInt(min, max);
+            }
+            return userInput;
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input");
+            return getInt(min, max);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
             return getInt(min, max);
         }
-        return userInput;
     }
 
     public int getInt() {
         System.out.println("Please enter a whole number:");
-        int userInput = scanner.nextInt();
-        return userInput;
+        try {
+            int userInput = Integer.valueOf(this.scanner.nextLine());
+            System.out.println("Input is accepted");
+            return userInput;
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input");
+            return getInt();
+        }
+
     }
 
     public double getDouble(double min, double max) {
